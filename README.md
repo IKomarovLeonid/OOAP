@@ -1,11 +1,13 @@
 # OOAP
 Object oriented analysis programming.
 
-You can see models in /src/Models
-You can see models tests in /tests
-You can use models in app project (console app)
+You can see models in /src/Models.
 
-All projects uses net5.0
+You can see models tests in /tests.
+
+You can use models in app project (console app).
+
+All projects uses net 5.0
 
 # First task: Bounded stack (Models/Stack) 6.12.2020
 
