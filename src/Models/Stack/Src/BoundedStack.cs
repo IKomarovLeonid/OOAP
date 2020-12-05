@@ -9,16 +9,18 @@ namespace Stack
     public class BoundedStack<T> : AbstractBoundedStack<T>
     {
         // data
-        private readonly List<T> _boundedStack;
+        private List<T> _boundedStack;
+        // statuses 
         private OpResult _popStatus = OpResult.NIL;
         private OpResult _peekStatus = OpResult.NIL;
+        private OpResult _pushStatus = OpResult.NIL;
 
-
-        public BoundedStack(int capacity = 32)
+        
+        public override void Initialize(int capacity = 32)
         {
-            if(capacity < 1) throw new ArgumentException();
+            if(capacity < 0) throw new ArgumentException();
             // initialize
-            _boundedStack = new List<T>(capacity);
+            _boundedStack ??= new List<T>(capacity);
         }
 
 
@@ -28,7 +30,9 @@ namespace Stack
             if (this._boundedStack.Count != this._boundedStack.Capacity)
             {
                 _boundedStack.Add(item);
+                _pushStatus = OpResult.OK;
             }
+            else _pushStatus = OpResult.ERROR;
         }
 
         public override void Pop()
@@ -74,6 +78,11 @@ namespace Stack
         public override OpResult GetPeekStatus()
         {
             return _peekStatus;
+        }
+
+        public override OpResult GetPushStatus()
+        {
+            return _pushStatus;
         }
     }
 }
