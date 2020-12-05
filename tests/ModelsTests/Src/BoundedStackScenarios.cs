@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Buffers;
+using System.Reflection.Metadata;
 using FluentAssertions;
 using Stack;
 using Stack.Enums;
 using Xbehave;
 
-namespace ModelsTests.Src
+namespace ModelsTests
 {
     public class BoundedStackScenarios
     {
@@ -18,6 +18,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<int>();
+                    stack.Initialize();
                 });
 
             "When user pushes 33 items into bounded stack"
@@ -46,7 +47,8 @@ namespace ModelsTests.Src
             $"Given there is a user's capacity bounded stack model with '{capacity}' capacity"
                 .x(() =>
                 {
-                    stack = new BoundedStack<string>(capacity);
+                    stack = new BoundedStack<string>();
+                    stack.Initialize(capacity);
                 });
 
             $"When user pushes '{2*capacity}' items into such bounded stack"
@@ -66,6 +68,66 @@ namespace ModelsTests.Src
         }
 
         [Scenario]
+        public void WhenPushHappensWithFullOfItemsStackPushResultShouldBeError()
+        {
+            BoundedStack<string> stack = null;
+
+            "Given there is an stack with item's count equal to capacity"
+                .x(() =>
+                {
+                    stack = new BoundedStack<string>();
+                    stack.Initialize(2);
+                    // items
+                    stack.Push("I");
+                    stack.Push("Processing");
+                });
+
+            "When push operation happens"
+                .x(() =>
+                {
+                    stack.Push("New string");
+                });
+
+            "Then get last push operation result should be 'Error'"
+                .x(() =>
+                {
+                    var status = stack.GetPushStatus();
+
+                    status.Should().Be(OpResult.ERROR);
+                });
+        }
+
+        [Scenario]
+        public void WhenPushHappensWithNotFullOfItemsStackPushResultShouldBeError()
+        {
+            BoundedStack<string> stack = null;
+
+            "Given there is an stack with item's count less than capacity"
+                .x(() =>
+                {
+                    stack = new BoundedStack<string>();
+                    stack.Initialize(10);
+                    // items
+                    stack.Push("I");
+                    stack.Push("Processing");
+                });
+
+            "When push operation happens"
+                .x(() =>
+                {
+                    stack.Push("New string");
+                });
+
+            "Then get last push operation result should be 'Ok'"
+                .x(() =>
+                {
+                    var status = stack.GetPushStatus();
+
+                    status.Should().Be(OpResult.OK);
+                });
+        }
+
+        [Scenario]
         public void PopCanRemoveItemFromNotEmptyStack()
         {
             BoundedStack<int> stack = null;
@@ -74,6 +136,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<int>();
+                    stack.Initialize();
                 });
 
             "And stack has items 5 4 3 2 8"
@@ -114,6 +177,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<int>();
+                    stack.Initialize();
                 });
 
             "When pop operation happens"
@@ -140,6 +204,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<int>();
+                    stack.Initialize();
                 });
 
             "And this stack has 7 items: -2 3 5 1 0 -2 3 with first added item equal to -2"
@@ -178,6 +243,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
 
                     stack.Push(firstItem);
                     stack.Push(3.45);
@@ -209,6 +275,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
                 });
 
             "When peek operation happens"
@@ -233,6 +300,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
                     // peek operation for empty stack set error status
                     stack.Peek();
                 });
@@ -261,6 +329,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
                     // peek operation for empty stack set error status
                     stack.Pop();
                 });
@@ -289,6 +358,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
                 });
 
             "Then get peek and pop statuses must be 'Nil'"
@@ -311,6 +381,7 @@ namespace ModelsTests.Src
                 .x(() =>
                 {
                     stack = new BoundedStack<double>();
+                    stack.Initialize();
                     // elements
                     stack.Push(1);
                     stack.Push(2);
@@ -337,18 +408,47 @@ namespace ModelsTests.Src
         [Scenario]
         public void UserCanNotInitializeStackWithNegativeCapacity()
         {
-            Func<BoundedStack<int>> func = null;
+            Action func = null;
 
             "When user tries to initialize stack with negative capacity"
                 .x(() =>
                 {
-                    func = () => new BoundedStack<int>(-4);
+                    var stack = new BoundedStack<int>();
+                    func = () => stack.Initialize(-4);
                 });
 
             "Then system must generate exception"
                 .x(() =>
                 {
                     func.Should().Throw<ArgumentException>();
+                });
+        }
+
+        [Scenario]
+        public void StackWithNoInitializationThrowsException()
+        {
+            BoundedStack<double> stack = null;
+
+            "When stack is not initialized"
+                .x(() =>
+                {
+                    stack = new BoundedStack<double>();
+                });
+
+            "Then system must generate exception's on every stack's methods: push pop peek clear and size"
+                .x(() =>
+                {
+                    Action actionPush = () => stack.Push(234);
+                    Action actionPop = () => stack.Pop();
+                    Action actionPeek = () => stack.Peek();
+                    Action actionClear = () => stack.Clear();
+                    Action actionSize = () => stack.Size();
+
+                    actionPush.Should().Throw<Exception>();
+                    actionPop.Should().Throw<Exception>();
+                    actionPeek.Should().Throw<Exception>();
+                    actionClear.Should().Throw<Exception>();
+                    actionSize.Should().Throw<Exception>();
                 });
         }
 
