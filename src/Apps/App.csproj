@@ -5,4 +5,8 @@
     <TargetFramework>netcoreapp5.0</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Models\Stack\Stack.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,51 +1,79 @@
 ﻿using System;
 using System.Collections.Generic;
-using Stack.Src.Abstract;
+using System.Linq;
+using Stack.Abstract;
+using Stack.Enums;
 
-namespace Stack.Src
+namespace Stack
 {
-    class BoundedStack <T> : AbstractBoundedStack<T>
+    public class BoundedStack<T> : AbstractBoundedStack<T>
     {
         // data
-        private List<T> _boundedStack;
-        private int _peek_status;
-        private int _pop_status;
+        private readonly List<T> _boundedStack;
+        private OpResult _popStatus = OpResult.NIL;
+        private OpResult _peekStatus = OpResult.NIL;
+
+
+        public BoundedStack(int capacity = 32)
+        {
+            if(capacity < 1) throw new ArgumentException();
+            // initialize
+            _boundedStack = new List<T>(capacity);
+        }
+
 
         // stack operations 
-
         public override void Push(T item)
         {
-            throw new NotImplementedException();
+            if (this._boundedStack.Count != this._boundedStack.Capacity)
+            {
+                _boundedStack.Add(item);
+            }
         }
 
         public override void Pop()
         {
-            throw new NotImplementedException();
+            if (this._boundedStack.Count != 0)
+            {
+                _boundedStack.RemoveAt(0);
+                _popStatus = OpResult.OK;
+            }
+            else
+            {
+                _popStatus = OpResult.ERROR;
+            }
         }
 
         public override T Peek()
         {
-            throw new NotImplementedException();
+            if (this._boundedStack.Count != 0)
+            {
+                _peekStatus = OpResult.OK;
+                return this._boundedStack.First();
+            }
+
+            _peekStatus = OpResult.ERROR;
+            return default;
         }
 
         public override void Clear()
         {
-            throw new NotImplementedException();
+            _boundedStack.Clear();
         }
 
         public override int Size()
         {
-            throw new NotImplementedException();
+            return _boundedStack.Count;
         }
 
-        public override int GetPopStatus()
+        public override OpResult GetPopStatus()
         {
-            throw new NotImplementedException();
+            return _popStatus;
         }
 
-        public override int GetPeekStatus()
+        public override OpResult GetPeekStatus()
         {
-            throw new NotImplementedException();
+            return _peekStatus;
         }
     }
 }

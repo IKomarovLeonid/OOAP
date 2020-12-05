@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using Stack.Enums;
 
-namespace Stack.Src.Abstract
+namespace Stack.Abstract
 {
-    abstract class AbstractBoundedStack <T>
+    public abstract class AbstractBoundedStack <T>
     {
         public abstract void Push(T item);
 
@@ -16,8 +14,8 @@ namespace Stack.Src.Abstract
 
         public abstract void Clear();
 
-        public abstract int GetPeekStatus();
+        public abstract OpResult GetPeekStatus();
 
-        public abstract int GetPopStatus();
+        public abstract OpResult GetPopStatus();
     }
 }
