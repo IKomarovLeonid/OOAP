@@ -15,7 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{F10B99E3
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ModelsTests", "tests\ModelsTests\ModelsTests.csproj", "{0CC9CF7F-1FEB-44FE-A2AA-93A3BDB9399B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinkedList", "src\Models\LinkedList\LinkedList.csproj", "{AA175ADB-095D-433B-A273-10B5EED4B360}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListModel", "src\Models\LinkedList\ListModel.csproj", "{AA175ADB-095D-433B-A273-10B5EED4B360}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

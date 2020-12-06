@@ -1,6 +1,6 @@
-﻿namespace LinkedList.Src.Abstract
+﻿namespace ListModel.Abstract
 {
-    abstract class AbstractLinkedList <T>
+    public abstract class AbstractModelList <T>
     {
         // Condition: list is not empty
         public abstract void CursorToHead();
@@ -22,7 +22,7 @@
 
         public abstract void Clear();
 
-        public abstract void Size();
+        public abstract int Size();
 
         // useful operations
 
