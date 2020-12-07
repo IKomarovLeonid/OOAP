@@ -81,7 +81,14 @@ namespace ListModel
 
         public override void RemoveAllSameItems(T item)
         {
-            throw new System.NotImplementedException();
+            if (IsCursorSet())
+            {
+                while (IsCursorSet())
+                {
+                    if(GetItem().Equals(item)) RemoveItem();
+                    MoveCursorNext();
+                }
+            }
         }
 
         public override void RemoveItem()
