@@ -76,7 +76,23 @@ namespace ListModel
 
         public override void PutNext(T item)
         {
-            throw new System.NotImplementedException();
+            MoveCursorNext();
+            if (IsCursorSet())
+            {
+                var current = GetItem();
+                ReplaceItem(item);
+
+                while (IsCursorSet())
+                {
+                    MoveCursorNext();
+                    var loopValue = GetItem();
+                    ReplaceItem(current);
+                    current = loopValue;
+                }
+
+                CursorToTail();
+                AddInTail(current);
+            }
         }
 
         public override void RemoveAllSameItems(T item)
@@ -103,15 +119,10 @@ namespace ListModel
 
         public override void SetToNextSameItem(T item)
         {
-            if (IsCursorSet())
+            while (_cursor != null)
             {
-                if (_cursor.Next == null) return;
+                if (GetItem().Equals(item)) return;
                 MoveCursorNext();
-                while (_cursor != null)
-                {
-                    if (GetItem().Equals(item)) return;
-                    MoveCursorNext();
-                }
             }
         }
 

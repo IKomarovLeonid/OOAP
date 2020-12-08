@@ -293,5 +293,44 @@ namespace ModelsTests
                     hasItem.Should().BeFalse();
                 });
         }
+
+        [Scenario]
+        public void When_ListIsNotEmptyAndCursorNotInTailPlaceItemNext_Must_SetItem()
+        {
+            ListModel<int> list = null;
+
+            "Given not empty list model with items 1 2 3 4 5"
+                .x(() =>
+                {
+                    list = new ListModel<int>();
+
+                    list.AddInTail(1);
+                    list.AddInTail(2);
+                    list.AddInTail(3);
+                    list.AddInTail(4);
+                    list.AddInTail(5);
+                });
+
+            "And cursor is set on item 3"
+                .x(() =>
+                {
+                    list.CursorToHead();
+                    list.SetToNextSameItem(3);
+                });
+
+            "When user tries to place 10 after current cursor"
+                .x(() =>
+                {
+                    list.PutNext(10);
+                });
+
+            "Then item must be placed after 3"
+                .x(() =>
+                {
+                    var size = list.Size();
+
+                    size.Should().Be(6);
+                });
+        }
     }
 }
