@@ -1,7 +1,4 @@
-﻿using System;
-using Stack;
-
-namespace Apps
+﻿namespace App
 {
     class Program
     {
