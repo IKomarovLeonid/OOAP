@@ -25,6 +25,8 @@ Task: implement ATD Linkedlist with additional feature: cursor.
 Done task 9.12.2020 (Models/ListModel) + tests.
 
 What i have missed in compare with right solution: 
+I use single status to cover all possible results of operations. Right solution has several methods to return specific operation result.
 
+2.2 Because if internal structure has no pointer to tail, we need to travel by each node to tail (O(n))
 
-
+2.3 Because we can user move to next item (item) and no need to iterate to each node.
