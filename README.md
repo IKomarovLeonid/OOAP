@@ -20,6 +20,11 @@ Set error statuses to enums. Right solution uses 'int' statuses.
 
 # Second task: ATD LinkedList 6.12.2020
 
-Task: implement ATD Linkedlist with additional feature: cursore
+Task: implement ATD Linkedlist with additional feature: cursor.
+
+Done task 9.12.2020 (Models/ListModel) + tests.
+
+What i have missed in compare with right solution: 
+
 
 
