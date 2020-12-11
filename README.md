@@ -31,4 +31,8 @@ I use single status to cover all possible results of operations (OK, Not set, Er
 
 2.3 Why we do not need operation to find all nodes with same value: Because we can user move to next item (item) and no need to iterate to each node.
 
-# Third task : split one way list and two way linkedlists abstractions
+# Third task : split one way list and two way linkedlists abstractions 11.12.2020
+
+11.12.2020: Done
+
+Split single list and linked list models. 
