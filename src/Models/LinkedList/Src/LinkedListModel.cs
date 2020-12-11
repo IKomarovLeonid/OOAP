@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using ListModel.Abstract;
 using ListModel.Statuses;
 
 namespace ListModel
 {
-    public class ListModel<T> : AbstractModelList<T>
+    public class LinkedListModel<T> : AbstractModelLinkedList<T>
     {
         // data
         private readonly LinkedList<T> _list;
@@ -13,7 +14,7 @@ namespace ListModel
         // status
         private OperationStatus _operationStatus;
 
-        public ListModel()
+        public LinkedListModel()
         {
             _list = new LinkedList<T>();
             _operationStatus = OperationStatus.NoAnyOperation;
@@ -106,6 +107,18 @@ namespace ListModel
             _operationStatus = OperationStatus.CursorNotSet;
         }
 
+        public override void MoveCursorPrevious()
+        {
+            if (IsCursorSet())
+            {
+                if (_cursor.Previous != null) _cursor = _cursor.Previous;
+                _operationStatus = OperationStatus.Ok;
+                return;
+            }
+            _operationStatus = OperationStatus.CursorNotSet;
+        }
+
+
         public override void PutBefore(T item)
         {
             if (IsCursorSet())
@@ -148,7 +161,7 @@ namespace ListModel
 
             while (IsCursorSet())
             {
-                if (!GetItem().Equals(item) && IsCursorInTail()) break;
+                if(!GetItem().Equals(item) && IsCursorInTail()) break;
                 if (GetItem().Equals(item)) RemoveItem();
                 SetToNextSameItem(item);
             }
@@ -169,7 +182,7 @@ namespace ListModel
 
                 if (_cursor.Previous != null)
                 {
-                    _cursor = _cursor.Previous;
+                    MoveCursorPrevious();
                     _list.Remove(_cursor.Next);
                     _operationStatus = OperationStatus.Ok;
                     return;
