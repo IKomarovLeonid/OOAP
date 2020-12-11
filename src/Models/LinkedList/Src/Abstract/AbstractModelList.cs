@@ -14,8 +14,7 @@ namespace ListModel.Abstract
         public abstract void CursorToTail();
         // Condition: next node exists
         public abstract void MoveCursorNext();
-        // Condition: previous node exists
-        public abstract void MoveCursorPrevious();
+ 
         // Condition: list is not empty
         public abstract T GetItem();
 
