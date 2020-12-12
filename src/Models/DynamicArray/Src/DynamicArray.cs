@@ -1,13 +1,16 @@
-﻿using System.Runtime.Serialization.Formatters;
+﻿using System;
+using DynamicArray.Enums;
 using DynamicArray.Src.Abstract;
 using DynamicArray.Src.Enums;
 
-namespace DynamicArray.Src
+namespace DynamicArray
 {
     public class DynamicArray<T> : AbstractDynamicArray<T>
     {
         private T[] _array;
         private int? _cursor;
+        // data
+        private int _count;
 
         // statuses
         private OperationStatus _insertStatus;
@@ -19,7 +22,58 @@ namespace DynamicArray.Src
 
         public override void AddLast(T item)
         {
-           
+           // checks array initialization 
+           if (!IsInitialized())
+           {
+               _insertStatus = OperationStatus.ArrayNotInitialized;
+               return;
+           }
+           // checks ability to insert 
+           var count = GetItemsCount();
+           var capacity = _array.Length;
+           // remember current cursor
+           var beforeStart = _cursor;
+
+           if (count < capacity)
+           {
+               SetCursor(0);
+                _moveStatus = OperationStatus.Ok;
+                while (_moveStatus == OperationStatus.Ok)
+                {
+                    if (GetItem().Equals(default(T)))
+                    {
+                        SetItem(item);
+                        _cursor = beforeStart;
+                        return;
+                    }
+                    MoveCursorNext();
+                }
+           }
+           else
+           {
+               // set cursor to last current index
+               SetCursor(capacity - 1);
+               // resize 
+               var newCapacity = (int)(capacity * 1.5);
+               ResizeArray(newCapacity);
+               // move next
+               MoveCursorNext();
+               SetItem(item);
+               // restore cursor 
+               _cursor = beforeStart;
+               return;
+           }
+        }
+
+        // system
+        private void ResizeArray(int newCapacity)
+        {
+            if (newCapacity > GetCapacity()) _resizeStatus = Enums.ResizeStatus.Increase;
+            else _resizeStatus = Enums.ResizeStatus.Decrease;
+
+            var newArray = new T[newCapacity];
+            Array.Copy(_array, newArray, _array.Length);
+            _array = newArray;
         }
 
         public override void Clear()
@@ -29,18 +83,9 @@ namespace DynamicArray.Src
                 _getStatus = OperationStatus.ArrayNotInitialized;
                 return;
             }
-
-            _cursor = 0;
-            while (_cursor < _array.Length)
-            {
-                if (!GetItem().Equals(default))
-                {
-                    Remove();
-                }
-                MoveCursorNext();
-            }
-
+            Array.Clear(_array, 0, _array.Length);
             _cursor = null;
+            _count = 0;
         }
 
         public override int GetCapacity()
@@ -55,6 +100,13 @@ namespace DynamicArray.Src
 
         }
 
+        public override int GetItemsCount()
+        {
+            _getStatus = OperationStatus.Ok;
+            return _count;
+        }
+
+        // methods with cursor
         public override T GetItem()
         {
             if (!IsInitialized())
@@ -70,11 +122,6 @@ namespace DynamicArray.Src
             }
 
             return _array[(int)_cursor];
-        }
-
-        public override void GetItemsCount()
-        {
-            throw new System.NotImplementedException();
         }
 
         public override bool IsCursorSet()
@@ -109,7 +156,7 @@ namespace DynamicArray.Src
 
         public override OperationStatus LastSetCursorStatus()
         {
-            return _moveStatus;
+            return _setCursorStatus;
         }
 
         public override void MoveCursorNext()
@@ -189,7 +236,7 @@ namespace DynamicArray.Src
 
         public override ResizeStatus ResizeStatus()
         {
-            throw new System.NotImplementedException();
+            return _resizeStatus;
         }
 
         public override AbstractDynamicArray<T> SetCapacity(int capacity = 16)
@@ -229,6 +276,7 @@ namespace DynamicArray.Src
 
             _insertStatus = OperationStatus.Ok;
             _array[(int)_cursor] = item;
+            _count++;
         }
     }
 }

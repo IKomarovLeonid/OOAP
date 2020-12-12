@@ -1,4 +1,5 @@
-﻿using DynamicArray.Src.Enums;
+﻿using DynamicArray.Enums;
+using DynamicArray.Src.Enums;
 
 namespace DynamicArray.Src.Abstract
 {
@@ -32,7 +33,7 @@ namespace DynamicArray.Src.Abstract
         public abstract bool IsCursorSet();
 
         // system
-        public abstract void GetItemsCount();
+        public abstract int GetItemsCount();
 
         public abstract int GetCapacity();
 

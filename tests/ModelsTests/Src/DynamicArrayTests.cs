@@ -1,4 +1,6 @@
 ﻿using System;
+using DynamicArray;
+using DynamicArray.Enums;
 using DynamicArray.Src;
 using DynamicArray.Src.Enums;
 using FluentAssertions;
@@ -95,6 +97,168 @@ namespace ModelsTests
                     setAction.Invoke();
                     var setStatus = array.LastSetCursorStatus();
                     setStatus.Should().Be(OperationStatus.ArrayNotInitialized);
+                });
+        }
+
+        [Scenario]
+        public void User_CanRequestCountOfInitializedArray()
+        {
+            DynamicArray<int> array = null;
+            var count = 0;
+
+            $"Given dynamic array model with default capacity '16' and two items"
+                .x(() =>
+                {
+                    array = new DynamicArray<int>();
+                    array.SetCapacity(16);
+                    array.SetCursor(0);
+                    array.SetItem(5);
+                    array.SetCursor(10);
+                    array.SetItem(-4);
+                });
+
+            "When user tries to request array count of items"
+                .x(() =>
+                {
+                    count = array.GetItemsCount();
+                });
+
+            "Then array must represent count equal to '2'"
+                .x(() =>
+                {
+                    count.Should().Be(2);
+                });
+
+        }
+
+        [Scenario]
+        public void User_CanAddItemInTailOfArrayModel()
+        {
+            DynamicArray<int> array = null;
+
+            "Given there is an array model with first items 3,4"
+                .x(() =>
+                {
+                    array = new DynamicArray<int>();
+                    array.SetCapacity(16);
+                    array.SetCursor(0);
+                    array.SetItem(3);
+                    array.MoveCursorNext();
+                    array.SetItem(4);
+                });
+
+            "When user invoke operation add in tail with new item 10"
+                .x(() =>
+                {
+                    array.AddLast(10);
+                    // set cursor to index 2
+                    array.SetCursor(2);
+                });
+
+            "Then new item '10' must be placed to index '2'"
+                .x(() =>
+                {
+                    var item = array.GetItem();
+
+                    item.Should().Be(10);
+                });
+        }
+
+        [Scenario]
+        public void ArrayDoNotResizeIfNewCountEqualsCapacity()
+        {
+            DynamicArray<int> array = null;
+
+            "Given there is an array model with 16 capacity and 15 items"
+                .x(() =>
+                {
+                    array = new DynamicArray<int>();
+                    array.SetCapacity(16);
+                    // generate 
+                    for(int index = 0; index < 15; index++) array.AddLast(index);
+                });
+
+            "When user adds 16's item in array's tail"
+                .x(() =>
+                {
+                    array.AddLast(1000);
+                });
+
+            "Then array's count should be equal to array's capacity and no resize happens"
+                .x(() =>
+                {
+                    var count = array.GetItemsCount();
+                    var capacity = array.GetCapacity();
+                    var resizeStatus = array.ResizeStatus();
+
+                    count.Should().Be(capacity);
+                    resizeStatus.Should().Be(ResizeStatus.NoChanges);
+                });
+        }
+
+        [Example(16, 24)]
+        [Example(7, 10)]
+        [Scenario]
+        public void When_UserTriesToAddLastItemAndCountEqualsCapacityArray_Must_Resize(int capacity, int newCapacity)
+        {
+            DynamicArray<int> array = null;
+
+            $"Given there is an array model with '{capacity}' capacity and '{capacity}' items"
+                .x(() =>
+                {
+                    array = new DynamicArray<int>();
+                    array.SetCapacity(capacity);
+                    // generate 
+                    for (int index = 1; index < capacity+1; index++) array.AddLast(index);
+                });
+
+            $"When tries to adds '{capacity + 1}' item in array's tail"
+                .x(() =>
+                {
+                    array.AddLast(1000);
+                });
+
+            $"Then array's capacity should resize from '{capacity}' to '{newCapacity}'"
+                .x(() =>
+                {
+                    var cap = array.GetCapacity();
+                    var resizeStatus = array.ResizeStatus();
+
+                    cap.Should().Be(newCapacity);
+                    resizeStatus.Should().Be(ResizeStatus.Increase);
+                });
+        }
+
+        [Scenario]
+        public void User_CanAddItemInArrayWhenCountEqualsCapacity()
+        {
+            DynamicArray<int> array = null;
+
+            $"Given there is an array model with '16' capacity and '16' items"
+                .x(() =>
+                {
+                    array = new DynamicArray<int>();
+                    array.SetCapacity(16);
+                    // generate 
+                    for (int index = 1; index < 17; index++) array.AddLast(index);
+                });
+
+            $"When tries to adds '17' item in array's tail"
+                .x(() =>
+                {
+                    array.AddLast(1000);
+                    // set cursor
+                    array.SetCursor(16);
+                });
+
+            $"Then item should be added to 17's position"
+                .x(() =>
+                {
+                    var item = array.GetItem();
+                    var count = array.GetItemsCount();
+
+                    item.Should().Be(1000);
+                    count.Should().Be(17);
                 });
         }
     }
