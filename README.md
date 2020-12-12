@@ -50,3 +50,7 @@ Cursor was not required. Dynamic Array not requires cursor for optimization
 12.12.2020: Done
 
 Difference between realization and correct answer: no difference. I produce correct split of classic dequeue method: dequeue item and get head item becomes separated operations
+
+# Task six: deque model 12.12.2020
+
+Also need to review abstractions in same way as list and linkedList 
