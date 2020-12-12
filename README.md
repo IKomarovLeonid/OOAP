@@ -38,3 +38,7 @@ I use single status to cover all possible results of operations (OK, Not set, Er
 Split single list and linked list models. 
 
 # Task four: dynamic array with OOAP model 11.12.2020
+
+12.12.2020: Done 
+
+Difference between realization and correct answer: 
