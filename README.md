@@ -42,3 +42,5 @@ Split single list and linked list models.
 12.12.2020: Done 
 
 Difference between realization and correct answer: 
+
+Cursor was not required. Dynamic Array not requires cursor for optimization
