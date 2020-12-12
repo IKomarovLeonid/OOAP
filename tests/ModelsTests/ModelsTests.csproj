@@ -24,6 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Models\DynamicArray\DynamicArray.csproj" />
     <ProjectReference Include="..\..\src\Models\LinkedList\ListModel.csproj" />
+    <ProjectReference Include="..\..\src\Models\Queue\Queue.csproj" />
     <ProjectReference Include="..\..\src\Models\Stack\Stack.csproj" />
   </ItemGroup>
 

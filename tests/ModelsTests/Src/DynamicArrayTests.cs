@@ -279,6 +279,20 @@ namespace ModelsTests
                     array.SetItem(3);
                     array.SetCursor(13);
                     array.SetItem(4);
+                    array.SetCursor(14);
+                    array.SetItem(4);
+                    array.SetCursor(15);
+                    array.SetItem(4);
+                    array.SetCursor(1);
+                    array.SetItem(4);
+                    array.SetCursor(2);
+                    array.SetItem(4);
+                    array.SetCursor(3);
+                    array.SetItem(4);
+                    array.SetCursor(4);
+                    array.SetItem(4);
+                    array.SetCursor(5);
+                    array.SetItem(4);
                 });
 
             $"When user tries to remove item at position 10"
@@ -295,7 +309,7 @@ namespace ModelsTests
                     var count = array.GetItemsCount();
 
                     item.Should().Be(default);
-                    count.Should().Be(2);
+                    count.Should().Be(9);
                 });
         }
 
