@@ -1,7 +1,7 @@
 ﻿using DynamicArray.Enums;
 using DynamicArray.Src.Enums;
 
-namespace DynamicArray.Src.Abstract
+namespace DynamicArray.Abstract
 {
     public abstract class AbstractDynamicArray <T>
     {
@@ -29,12 +29,12 @@ namespace DynamicArray.Src.Abstract
         public abstract void SetItem(T item);
         // required: cursor is set
         public abstract void MoveToNextSameItem(T item);
-
+        // required: array is initialized 
         public abstract bool IsCursorSet();
 
         // system
         public abstract int GetItemsCount();
-
+        // required: array is initialized
         public abstract int GetCapacity();
 
         public abstract bool IsInitialized();
