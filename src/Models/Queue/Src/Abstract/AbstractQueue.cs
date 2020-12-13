@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Queue.Src.Enums;
+using Queues.Enums;
 
-namespace Queue.Src.Abstract
+namespace Queues.Abstract
 {
     public abstract class AbstractQueue <T>
     {

@@ -1,4 +1,4 @@
-﻿namespace Queue.Src.Enums
+﻿namespace Queues.Enums
 {
     public enum OperationStatus
     {
