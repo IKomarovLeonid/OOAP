@@ -54,3 +54,7 @@ Difference between realization and correct answer: no difference. I produce corr
 # Task six: deque model 12.12.2020
 
 Also need to review abstractions in same way as list and linkedList 
+
+13.12.2020: Done 
+
+Difference between realization and correct answer: 
