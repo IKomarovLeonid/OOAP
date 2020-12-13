@@ -1,7 +1,5 @@
 ﻿using System.Collections.Generic;
-using DynamicArray.Src.Enums;
 using FluentAssertions;
-using Queue.Src;
 using Queues;
 using Xbehave;
 using OperationStatus = Queues.Enums.OperationStatus;
