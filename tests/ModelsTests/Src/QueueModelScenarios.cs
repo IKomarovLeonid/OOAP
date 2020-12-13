@@ -2,8 +2,9 @@
 using DynamicArray.Src.Enums;
 using FluentAssertions;
 using Queue.Src;
+using Queues;
 using Xbehave;
-using OperationStatus = Queue.Src.Enums.OperationStatus;
+using OperationStatus = Queues.Enums.OperationStatus;
 
 namespace ModelsTests
 {

@@ -19,7 +19,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ListModel", "src\Models\Lin
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DynamicArray", "src\Models\DynamicArray\DynamicArray.csproj", "{9F4AEC72-F82B-48EE-A4A3-F8005D50F245}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Queue", "src\Models\Queue\Queue.csproj", "{170C7735-8E0D-4719-BED2-F30A9A3D5E77}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Queues", "src\Models\Queue\Queues.csproj", "{170C7735-8E0D-4719-BED2-F30A9A3D5E77}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

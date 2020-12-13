@@ -4,7 +4,7 @@ using Queues.Enums;
 
 namespace Queues
 {
-    public class QueueModel<T> : AbstractQueue<T>
+    public class DequeModel<T> : AbstractDeque<T>
     {
         // data
         private LinkedList<T> _list;
@@ -14,6 +14,8 @@ namespace Queues
         private OperationStatus _dequeueStatus;
         private OperationStatus _sizeStatus;
         private OperationStatus _peekStatus;
+        private OperationStatus _enqueueFirstOperation;
+        private OperationStatus _dequeLastOperation;
 
 
         // initialization
@@ -104,9 +106,70 @@ namespace Queues
             return _sizeStatus;
         }
 
+        public override OperationStatus LastEnqueueFirstStatus()
+        {
+            return _enqueueFirstOperation;
+        }
+
+        public override OperationStatus DequeueLastStatus()
+        {
+            return _dequeLastOperation;
+        }
+
         public override ICollection<T> GetItems()
         {
             return _list ?? new LinkedList<T>();
         }
+
+        public override T PeekLastItem()
+        {
+            if (_list == null)
+            {
+                _peekStatus = OperationStatus.NotInitialized;
+                return default;
+            }
+
+            if (Size() == 0)
+            {
+                _peekStatus = OperationStatus.Error;
+                return default;
+            }
+
+            _peekStatus = OperationStatus.Ok;
+            return _list.Last.Value;
+        }
+
+        public override void EnqueueFirst(T item)
+        {
+            if (_list == null)
+            {
+                _enqueueFirstOperation = OperationStatus.NotInitialized;
+                return;
+            }
+
+            // place new item
+            _list.AddFirst(item);
+            _enqueueFirstOperation = OperationStatus.Ok;
+        }
+
+        public override void DequeueLast()
+        {
+            if (_list == null)
+            {
+                _dequeLastOperation = OperationStatus.NotInitialized;
+                return;
+            }
+
+            if (Size() == 0)
+            {
+                _dequeLastOperation = OperationStatus.Error;
+                return;
+            }
+
+            _dequeLastOperation = OperationStatus.Ok;
+            _list.RemoveLast();
+        }
+
+        
     }
 }
