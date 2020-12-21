@@ -62,3 +62,5 @@ Difference between realization and correct answer: Parent Queue = queue. Abstrac
 # Task seven: hashtable
 
 21.12.2020: Done
+
+Difference: don't implement remove method. Also split hash fun and put methods. 
