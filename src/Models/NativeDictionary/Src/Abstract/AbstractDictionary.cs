@@ -20,6 +20,13 @@ namespace NativeDictionary.Abstract
         public abstract bool HasKey(string key);
 
         // condition: key <-> value is in dictionary
+        public abstract T GetItem(string key);
+
+        // condition: key <-> value is in dictionary
+        // condition after: item has new value
+        public abstract void Update(string key, T item);
+
+        // condition: key <-> value is in dictionary
         // condition after success: slot is free. Key are not exists
         public abstract void Remove(string key);
 
@@ -34,5 +41,7 @@ namespace NativeDictionary.Abstract
         public abstract OperationCode LastPutStatus();
 
         public abstract OperationCode LastRemoveStatus();
+
+        public abstract OperationCode LastUpdateStatus();
     }
 }

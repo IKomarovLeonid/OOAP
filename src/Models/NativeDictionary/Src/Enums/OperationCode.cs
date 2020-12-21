@@ -2,6 +2,9 @@
 {
     public enum OperationCode
     {
-
+        NotInitialized,
+        Ok,
+        KeyAlreadyExists,
+        KeyNotFound
     }
 }
