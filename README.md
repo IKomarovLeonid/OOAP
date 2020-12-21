@@ -59,8 +59,14 @@ Also need to review abstractions in same way as list and linkedList
 
 Difference between realization and correct answer: Parent Queue = queue. Abstract queue and deque is inherited 
 
-# Task seven: hashtable
+# Task seven: hashtable 13.12.2020
 
 21.12.2020: Done
 
 Difference: don't implement remove method. Also split hash fun and put methods. 
+
+# Task eight: dictionary 21.12.2020
+
+21.12.2020: Done 
+
+Difference: 
