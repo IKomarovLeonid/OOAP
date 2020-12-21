@@ -69,4 +69,4 @@ Difference: don't implement remove method. Also split hash fun and put methods.
 
 21.12.2020: Done 
 
-Difference: 
+Difference: I split put and update for existed key. Correct solution has put method which overides item for existed key.
